@@ -1,0 +1,27 @@
+.form{
+    margin-top: 10rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form .textField{
+    width: fit-content;
+    margin: auto;
+}
+
+.form Button{
+    margin: auto;
+    margin-top: 2rem;
+    width: fit-content;
+}
+
+.marginX {
+    margin: 0 2px;
+}
+
+.error{
+    width: fit-content;
+    margin: auto;
+}

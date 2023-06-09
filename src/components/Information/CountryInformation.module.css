@@ -1,0 +1,16 @@
+.marginX {
+    margin: 2px 8px !important;
+}
+
+.container{
+    margin-top: 10rem;
+}
+
+.flag{
+    width: 50px;
+}
+
+.error{
+    width: fit-content;
+    margin: auto;
+}

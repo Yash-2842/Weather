@@ -1,23 +1,32 @@
 import logo from './logo.svg';
 import './App.css';
+import Form from './components/Form/Form';
+import CountryInformation from './components/Information/CountryInformation';
+import { useState,useRef } from 'react';
+import WeatherInformation from './components/Information/WeatherInformation';
 
 function App() {
+  const [showInformation,setShowInformation] = useState(false)
+  const [showWeather,setShowWeather] = useState(false)
+  // const [response,setResponse] = useState({})
+  const response =useRef()
+  const weatherData = useRef()
+  const submitHandler = (res) =>{
+    response.current = {...res}
+    // setResponse({...res})
+    setShowInformation(true)
+  }
+  const weatherInfo = (res) =>{
+    weatherData.current = {...res}
+    setShowInformation(false)
+    setShowWeather(true)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!showInformation && !showWeather && <Form onSubmit={submitHandler}/>}
+      {showInformation &&  <CountryInformation response={response.current} showWeather={weatherInfo}  onCancel={()=>setShowInformation(false)} />}
+      {showWeather && <WeatherInformation onCancel={()=>{setShowWeather(false);setShowInformation(true)}}  response={weatherData.current} />}
     </div>
   );
 }
