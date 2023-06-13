@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import {Box,Typography,Alert,Button} from '@mui/material'
+import {Box,Typography,Alert,Button,Grid} from '@mui/material'
 import styles from './CountryInformation.module.css'
 function CountryInformation({response,onCancel,showWeather}) {
     const [error,setError] = useState('')
-    const clickHandler = ()=>{
+    const clickHandler = (cityName)=>{
         setError('')
-        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${response.capital}&appid=993a389b6335e585ebf8aba136c574cd`)
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=993a389b6335e585ebf8aba136c574cd`)
             .then(res =>{
                 console.log(res.data)
                 response = {
@@ -22,8 +22,12 @@ function CountryInformation({response,onCancel,showWeather}) {
             })
     }
   return (
-<Box>
-        <Box display="flex" justifyContent="center" className={styles.container}>
+    <Box>
+    <Button margin={[2,0,0,0]} variant="contained" onClick={onCancel} color='error' className={styles.marginX}>Back</Button>
+    <Grid container >
+        {response.map((response)=>(
+            <Grid item xs={12} sm={6} md={4}>
+            <Box display="flex" justifyContent="center" className={styles.container}>
         <Typography variant='h6'>Capital :</Typography> 
         <Typography variant='subtitle1' className={styles.marginX}> {response.capital}</Typography> 
         </Box>
@@ -40,13 +44,15 @@ function CountryInformation({response,onCancel,showWeather}) {
         <img src={response.flag}  className={`${styles.marginX} ${styles.flag}`} />
         </Box>
         <Box display='flex' justifyContent="center">
-        <Button variant="contained" onClick={onCancel} color='error' className={styles.marginX}>Back</Button>
-        <Button variant="contained" onClick={clickHandler}>Capital Weather</Button>
+        <Button variant="contained" onClick={()=>clickHandler(response.capital)}>Capital Weather</Button>
         </Box>
+            </Grid>
+        ))}
+        </Grid>
         <Box>
         {error.trim().length !== 0 && <Alert className={styles.error} severity="error">{error}</Alert>}
         </Box>
-    </Box>
+        </Box>
   )
   
 }

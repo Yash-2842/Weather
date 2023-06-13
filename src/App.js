@@ -12,7 +12,7 @@ function App() {
   const response =useRef()
   const weatherData = useRef()
   const submitHandler = (res) =>{
-    response.current = {...res}
+    response.current = [...res]
     // setResponse({...res})
     setShowInformation(true)
   }

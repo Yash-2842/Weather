@@ -14,15 +14,22 @@ function Form(props) {
 
         axios.get(`https://restcountries.com/v2/name/${countryName}`)
             .then(res =>{
-                const response = {
-                    capital : res.data[0].capital,
-                    population : res.data[0].population,
-                    lat : res.data[0].latlng[0],
-                    lng : res.data[0].latlng[1],
-                    flag : res.data[0].flags.png,
-                }
+                // const response = {
+                //     capital : res.data[0].capital,
+                //     population : res.data[0].population,
+                //     lat : res.data[0].latlng[0],
+                //     lng : res.data[0].latlng[1],
+                //     flag : res.data[0].flags.png,
+                // }
+                const response = res.data.map((country)=>({
+                    capital : country.capital,
+                    population : country.population,
+                    lat : country.latlng ? country.latlng[0]: null,
+                    lng : country.latlng ? country.latlng[1]: null,
+                    flag : country.flags.png
+                }))
                 props.onSubmit(response)
-                console.log(res.data[0].latlng)
+                console.log(response)
             }).catch(err =>{
                 console.log(err)
                 setError("Invalid Country Name")
